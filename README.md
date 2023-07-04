@@ -6,12 +6,14 @@ Play (code) with Cairo language for writing smart contracts on StarkNet L2 chain
 
 - High level language: _cairo_
 - _Sierra_ serves as an intermediate layer between high-level Cairo and compilation targets such as _Cairo Assembly (CASM)_.
+- The diagram below is for `.cairo` file:
 
 ```mermaid
 graph LR
-  cairo --scarb build--> sierra
-  sierra --cairo-run--> casm --deploy--> S[Starknet L2 chain]
-  cairo --cairo-test--> Testing
+  file.cairo --scarb build--> file.sierra
+  file.sierra --sierra-compile--> file.casm --deploy--> S[Starknet L2 chain]
+  file.cairo --cairo-run--> Run
+  file.cairo --cairo-test--> Testing
 ```
 
 ## Installation
@@ -47,11 +49,20 @@ Verify the installation:
 $ scarb --version
 ```
 
-### 2. `cairo-run`
+### 2. Cairo, Starknet toolkits/binaries
 
-There are many commands available in `bin` folder of [cairo](https://github.com/starkware-libs/cairo) repo:
+There are many binaries available in `bin` folder of [cairo](https://github.com/starkware-libs/cairo) repo, for them we need to install directly.
 
 ![](img/cairo-bin-cargo-run.png)
+
+All the binaries below can be done at once by following this:
+
+1. `$ cargo build --release --bin cairo-run cairo-test starknet-compile starknet-sierra-compile` creates binaries: `cairo-run`, `cairo-test`, `starknet-compile`, `starknet-sierra-compile` in `target/release/` folder.
+2. copy all the binaries into `~/.cargo/bin` folder (already added to `$PATH`).
+
+Or else, for individual binaries, follow the steps below:
+
+#### `cairo-run`
 
 1. `$ cargo build --release --bin cairo-run` creates a binary: `cairo-run` in `target/release/` folder.
 2. copy the binary `cairo-run` into `~/.cargo/bin` folder (already added to `$PATH`).
@@ -77,35 +88,28 @@ Options:
 
 In order to upgrade, just update the repo & start from step-`1`.
 
-### 3. `cairo-test`
+#### `cairo-test`
 
 Similar to `cairo-run`,
 
 1. `$ cargo build --release --bin cairo-test` creates a binary: `cairo-test` in `target/release/` folder.
 2. copy the binary `cairo-test` into `~/.cargo/bin` folder (already added to `$PATH`).
 
-### 4. `starknet-compile`
+#### `starknet-compile`
 
 Similar to `cairo-run`,
 
 1. `$ cargo build --release --bin starknet-compile` creates a binary: `starknet-compile` in `target/release/` folder.
 2. copy the binary `starknet-compile` into `~/.cargo/bin` folder (already added to `$PATH`).
 
-### 5. `starknet-sierra-compile`
+#### `starknet-sierra-compile`
 
 Similar to `cairo-run`,
 
 1. `$ cargo build --release --bin starknet-sierra-compile` creates a binary: `starknet-sierra-compile` in `target/release/` folder.
 2. copy the binary `starknet-sierra-compile` into `~/.cargo/bin` folder (already added to `$PATH`).
 
----
-
-`2`, `3`, `4`, `5` can be combined like this:
-
-1. `$ cargo build --release --bin cairo-run cairo-test starknet-compile starknet-sierra-compile` creates binaries: `cairo-run`, `cairo-test`, `starknet-compile`, `starknet-sierra-compile` in `target/release/` folder.
-2. copy all the binaries into `~/.cargo/bin` folder (already added to `$PATH`).
-
-### 6. Editor
+### 3. Editor
 
 #### Extensions
 
@@ -174,5 +178,14 @@ Congratulations 🎉, you're all set to write Cairo code in VSCode.
 
    `target/` folder is created containing `target/dev/cairo_playground.sierra` file.
 
-7. Test #TODO: How to write tests ???
-8. Deploy code on StarkNet L2 chain #TODO: How to deploy ???
+7. Run cargo file:
+
+   ```sh
+   ❯ cairo-run --single-file src/lib.cairo                                                                                                           ⏎
+   [DEBUG] Hello, world!                   (raw: 0x48656c6c6f2c20776f726c6421
+
+   Run completed successfully, returning []
+   ```
+
+8. Test #TODO: How to write tests ???
+9. Deploy code on StarkNet L2 chain #TODO: How to deploy ???
