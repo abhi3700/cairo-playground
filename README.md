@@ -55,59 +55,52 @@ There are many binaries available in `bin` folder of [cairo](https://github.com/
 
 ![](img/cairo-bin-cargo-run.png)
 
-All the binaries below can be done at once by following this:
+- `cairo-run`
+- `cairo-test`
+- `starknet-compile`
+- `starknet-sierra-compile`
 
-1. `$ cargo build --release --bin cairo-run cairo-test starknet-compile starknet-sierra-compile` creates binaries: `cairo-run`, `cairo-test`, `starknet-compile`, `starknet-sierra-compile` in `target/release/` folder.
-2. copy all the binaries into `~/.cargo/bin` folder (already added to `$PATH`).
+All the required binaries below can be done at once by following this:
 
-Or else, for individual binaries, follow the steps below:
+1. Creates binaries: `cairo-run`, `cairo-test`, `starknet-compile`, `starknet-sierra-compile` in `target/release/` folder.
 
-#### `cairo-run`
+   ```sh
+   $ cargo build --release --bin cairo-run
+   $ cargo build --release --bin cairo-test
+   $ cargo build --release --bin starknet-compile
+   $ cargo build --release --bin starknet-sierra-compile
+   ```
 
-1. `$ cargo build --release --bin cairo-run` creates a binary: `cairo-run` in `target/release/` folder.
-2. copy the binary `cairo-run` into `~/.cargo/bin` folder (already added to `$PATH`).
-3. Now, verify:
+2. Just call the binaries from the `cairo` repo's cloned directory inside a scarb project like this:
 
-```sh
-❯ cairo-run --help                                                                                                                                ⏎
-Command line args parser.
-Exits with 0/1 if the input is formatted correctly/incorrectly.
+   **M-1**: Using `scarb` pkg manager:
 
-Usage: cairo-run [OPTIONS] <PATH>
+   ```toml
+   [scripts]
+   hello = "../cairo/target/release/cairo-run --single-file src/hello.cairo"
+   ```
 
-Arguments:
-  <PATH>  The file to compile and run
+   > Recommended to give the absolute path of the binaries w.r.t your mac. But for security reasons, given relative path here. We can use `env` as well. Waiting for better release in future. As of now, this is the best way to use binaries from `cairo` repo.
 
-Options:
-  -s, --single-file                    Whether path is a single file
-      --available-gas <AVAILABLE_GAS>  In cases where gas is available, the amount of provided gas
-      --print-full-memory              Whether to print the memory
-  -h, --help                           Print help
-  -V, --version                        Print version
-```
+   **M-2**: Using binary directly:
 
-In order to upgrade, just update the repo & start from step-`1`.
+   1. alias the `absolute path of the cloned target/release binaries`
 
-#### `cairo-test`
+   ```sh
+   # in .zprofile
+   $ alias cairorun="absolute/path/to/cairo/target/release/cairo-run"
+   $ alias cairotest="absolute/path/to/cairo/target/release/cairo-test"
+   $ alias snetcompile="absolute/path/to/cairo/target/release/starknet-compile"
+   $ alias snetscompile="absolute/path/to/cairo/target/release/starknet-sierra-compile"
+   ```
 
-Similar to `cairo-run`,
+   And then run `$ source .zprofile` to enable the aliasing.
 
-1. `$ cargo build --release --bin cairo-test` creates a binary: `cairo-test` in `target/release/` folder.
-2. copy the binary `cairo-test` into `~/.cargo/bin` folder (already added to `$PATH`).
+   2. And then run the hello program like this:
 
-#### `starknet-compile`
-
-Similar to `cairo-run`,
-
-1. `$ cargo build --release --bin starknet-compile` creates a binary: `starknet-compile` in `target/release/` folder.
-2. copy the binary `starknet-compile` into `~/.cargo/bin` folder (already added to `$PATH`).
-
-#### `starknet-sierra-compile`
-
-Similar to `cairo-run`,
-
-1. `$ cargo build --release --bin starknet-sierra-compile` creates a binary: `starknet-sierra-compile` in `target/release/` folder.
-2. copy the binary `starknet-sierra-compile` into `~/.cargo/bin` folder (already added to `$PATH`).
+   ```sh
+   $ cairorun --single-file src/hello.cairo
+   ```
 
 ### 3. Editor
 

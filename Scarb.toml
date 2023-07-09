@@ -6,3 +6,7 @@ version = "0.1.0"
 
 [dependencies]
 # foo = { path = "vendor/foo" }
+
+[scripts]
+lib = "../cairo/target/release/cairo-run --single-file src/lib.cairo"
+hello = "../cairo/target/release/cairo-run --single-file src/hello.cairo"
