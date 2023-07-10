@@ -180,5 +180,92 @@ Congratulations 🎉, you're all set to write Cairo code in VSCode.
    Run completed successfully, returning []
    ```
 
-8. Test #TODO: How to write tests ???
+8. Test
+
+   ```sh
+   ❯ scarb run hello_test
+   running 2 tests
+   test hello::hello::test_works ... ok
+   test hello::hello::test_fails ... ok
+   test result: ok. 2 passed; 0 failed; 0 ignored; 0 filtered out;
+   ```
+
 9. Deploy code on StarkNet L2 chain #TODO: How to deploy ???
+
+## Topics
+
+### Debug/Print
+
+```cairo
+use debug::PrintTrait;
+
+'Hello, world!'.print();
+'z'.print();
+z.print();
+```
+
+When run in CLI, it prints like this:
+
+```sh
+# scarb run hello
+❯ scarb run func1
+[DEBUG] Hello, world!                   (raw: 0x48656c6c6f2c20776f726c6421
+[DEBUG] z:                              (raw: 0x7a3a20
+
+[DEBUG] )                               (raw: 0x29
+
+Run completed successfully, returning []
+```
+
+Here, all the CLI values are in hex format. So, z = 41 (decimal) is represented as 0x29 (hexadecimal).
+
+### Test
+
+Write tests in the `*.cairo` files like this:
+
+```cairo
+#[cfg(test)]
+mod tests {
+    use super::{add_u8, add_felt252};
+
+    #[test]
+    fn test_add_u8() {
+        assert(add_u8(1, 2) == 3, '1+2 should be 3');
+    }
+
+    #[test]
+    #[should_panic(expected: ('1_000_000+2 should be 1_000_002', ))]
+    fn test_add_felt252_fails() {
+        assert(add_felt252(1_000_000, 2) == 1_000_003, '1_000_000+2 should be 1_000_002');
+    }
+
+    #[test]
+    #[ignore]
+    fn expensive_test() {
+         // code that takes an hour to run
+    }
+}
+```
+
+Setup `scarb` to run tests like this:
+
+```toml
+#[dependencies]
+func1_test = "../cairo/target/release/cairo-test --single-file src/tuts/functions/func1.cairo"
+```
+
+Run tests in the CLI
+
+```sh
+$ scarb run func1_test
+```
+
+### Types
+
+```cairo
+// 1. Primitive types
+let x: felt252 = 1;
+
+// 2. Arrays
+let arr: felt252[10] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+```

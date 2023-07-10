@@ -10,3 +10,7 @@ version = "0.1.0"
 [scripts]
 lib = "../cairo/target/release/cairo-run --single-file src/lib.cairo"
 hello = "../cairo/target/release/cairo-run --single-file src/hello.cairo"
+hello_test = "../cairo/target/release/cairo-test --single-file src/hello.cairo"
+func1 = "../cairo/target/release/cairo-run --single-file src/tuts/functions/func1.cairo"
+func1_test = "../cairo/target/release/cairo-test --single-file src/tuts/functions/func1.cairo"
+casting1 = "../cairo/target/release/cairo-run --single-file src/tuts/casting/casting1.cairo"
