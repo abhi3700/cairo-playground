@@ -269,3 +269,14 @@ let x: felt252 = 1;
 // 2. Arrays
 let arr: felt252[10] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 ```
+
+## Network
+
+- Faucet: https://faucet.goerli.starknet.io/
+- Wallet (like Metamask): [Braavos](https://chrome.google.com/webstore/detail/braavos-smart-wallet/jnlgamecbpmbajjfhmmmlhejkemejdma)
+- Explorer:
+  - Goerli Starknet: https://goerli.voyager.online/
+
+## Resources
+
+- [Starknet Foundry Book](https://foundry-rs.github.io/starknet-foundry/index.html)
